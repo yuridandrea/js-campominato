@@ -11,51 +11,66 @@
 //  possibile di numeri consentiti.
 // Al termine della partita il software deve comunicare il punteggio, 
 // cioè il numero di volte che l’utente ha inserito un numero consentito.
+// con difficoltà 0 => tra 1 e 100
+// con difficoltà 1 =>  tra 1 e 80
+// con difficoltà 2 => tra 1 e 50
 
 
+var max;
+var difficolta = prompt("scegliere la difficolta: facile, medio, o difficile");
+
+switch (difficolta) {
+  case "facile": max = 100;
+  break;
+  case "medio": max = 80;
+  break;
+  case "difficile": max = 50;
+}
+// console.log(max);
 
 var arrayMine = [];
 var numMine = 16;
 var arrayNumUtente = [];
+var punti = 0;
 
 while (arrayMine.length < numMine) {
-  var numGenerato = numeriRandom(1, 100);
+  var numGenerato = numeriRandom(1, max);
   if (isInArray(arrayMine, numGenerato) == false) {
   arrayMine.push(numGenerato);
   }
 }
 
-// do {
-//   var numUtente = parseInt(prompt("inserisci un numero"));
-// } while (isInArray(arrayMine, numUtente)==false);
 console.log(arrayMine);
 
 var haiPerso = false;
 
-while (arrayNumUtente.length < (100 - numMine) && haiPerso == false) {
+while (arrayNumUtente.length < (max - numMine) && haiPerso == false) {
   var numUtente = parseInt(prompt("inserisci un numero"));
 
   haiPerso == false
   if (isInArray(arrayMine, numUtente)) {
     alert("hai perso");
     haiPerso == true;
+    alert("il tuo punteggio e' di " + punti);
     var nuovaPartita = prompt("Vuoi riprovare? y/n");
+    
       if (nuovaPartita == "y") {
         location.reload();
       } else if(nuovaPartita == "n") {
         break;
       }
-  }else if (isInArray(arrayNumUtente, numUtente) == true) {
+  } if (isInArray(arrayNumUtente, numUtente) == true) {
     alert("hai gia utilizzato questo numero");
-  } else if (isInArray(arrayNumUtente, numUtente) == false) {
-    arrayNumUtente.push(numUtente);
-      if (arrayNumUtente.length == ( 100 - numMine)){
+    } else if (isInArray(arrayNumUtente, numUtente) == false) {
+      arrayNumUtente.push(numUtente);
+      punti++;
+      if (arrayNumUtente.length == ( max - numMine)){
         alert("hai vinto");
       }
-  }
-}  
+    }
+}
 
-
+console.log(punti);
 
 // funzioni
 function numeriRandom (min, max) {
